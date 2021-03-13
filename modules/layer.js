@@ -1,14 +1,15 @@
 export class Layer {
-  constructor(container = document.body) {          
-    this.canvas = document.createElement( `canvas` );//create new Canvas element
-    this.context = this.canvas.getContext( `2d` );   //get access to 2d drawing tools    
-    container.appendChild( this.canvas );      //put Canvas to Container
+  constructor(container) {
+    this.canvas = document.createElement(`canvas`);
+    this.context = this.canvas.getContext(`2d`);
+    container.appendChild(this.canvas);
 
-    addEventListener(`resize`, () => this.fitToContainer(), false);
-    this.fitToContainer();          
+    this.fitToContainer = this.fitToContainer.bind(this);
+    addEventListener(`resize`, this.fitToContainer); 
+    this.fitToContainer();
   }
-  fitToContainer() {                                //fit Canvas size to container
-    this.w = this.canvas.width = this.canvas.offsetWidth;
-    this.h = this.canvas.height = this.canvas.offsetHeight;
+  fitToContainer() {
+    this.w = this.canvas.width = this.canvas.clientWidth;
+    this.h = this.canvas.height = this.canvas.clientHeight;
   }
 }
